@@ -13,7 +13,7 @@ println () {
 
 if [[ -z $1 || -z $2 || (($# > 2)) ]]; then
   println "Incorrect syntax!" $ERROR
-  println "Usage: ./fm-dl.sh <FloMarching video URL> <output file>" $BOLD
+  println "Usage: $0 <FloMarching video URL> <output file>" $BOLD
   exit 1
 
 elif [[ $1 != "https://www.flomarching.com/"* ]]; then
