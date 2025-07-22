@@ -5,9 +5,9 @@ INFO="\e[1;36m"
 BOLD="\e[1;37m"
 RESET="\e[0m"
 
-PREFIX="[\e[1;35mfmdl${RESET}] "
+PREFIX="${RESET}[\e[1;35mfmdl${RESET}] "
 
-println () {
+println() {
   echo -e $3 "${PREFIX}${2}${1}${RESET}"
 }
 
