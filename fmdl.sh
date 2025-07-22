@@ -23,6 +23,16 @@ elif [[ $1 != "https://www.flomarching.com/"* ]]; then
 elif [[ $2 != *".mp4" && $2 != *".mkv" ]]; then
   println "Error: Output file must end with .mp4 or .mkv" $ERROR
   exit 1
+
+elif ! hash yt-dlp 2>/dev/null; then
+  println "Error: yt-dlp is not installed! Download it from here:" $ERROR
+  println "https://github.com/yt-dlp/yt-dlp" $BOLD
+  exit 1
+
+elif ! hash ffmpeg 2>/dev/null; then
+  println "Error: ffmpeg is not installed! Download it from here:" $ERROR
+  println "https://ffmpeg.org/" $BOLD
+  exit 1
 fi
 
 if [[ -e "$2" ]]; then
@@ -63,14 +73,14 @@ audio_download_url=$(echo $video_download_url | sed "s/chunklist_vo_/chunklist_a
 yt-dlp -o fmdl.$rand.audio.m4a "$audio_download_url"
 
 println "Waiting for video download..." $INFO
-tail -f "$tmp_log" &
+tail -fn 999 "$tmp_log" &
 tail_pid=$!
 wait $ytdl_pid
 kill $tail_pid
 rm "$tmp_log"
 
 println "Combining video and audio..." $INFO
-ffmpeg -i fmdl.$rand.video.mp4 -i fmdl.$rand.audio.m4a -c copy "$2"
+ffmpeg -hide_banner -i fmdl.$rand.video.mp4 -i fmdl.$rand.audio.m4a -c copy "$2"
 
 println "Cleaning up..." $INFO
 rm -f fmdl.$rand.*
