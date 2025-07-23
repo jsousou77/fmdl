@@ -11,7 +11,17 @@ println() {
   echo -e $3 "${PREFIX}${2}${1}${RESET}"
 }
 
-if [[ -z $1 || -z $2 || (($# > 2)) ]]; then
+if ! hash yt-dlp 2>/dev/null; then
+  println "Error: yt-dlp is not installed! Download it from here:" $ERROR
+  println "https://github.com/yt-dlp/yt-dlp" $BOLD
+  exit 1
+
+elif ! hash ffmpeg 2>/dev/null; then
+  println "Error: ffmpeg is not installed! Download it from here:" $ERROR
+  println "https://ffmpeg.org/" $BOLD
+  exit 1
+
+elif [[ -z $1 || -z $2 || (($# > 2)) ]]; then
   println "Incorrect syntax!" $ERROR
   println "Usage: $0 <FloMarching video URL> <output file>" $BOLD
   exit 1
@@ -22,16 +32,6 @@ elif [[ $1 != "https://www.flomarching.com/"* ]]; then
 
 elif [[ $2 != *".mp4" && $2 != *".mkv" ]]; then
   println "Error: Output file must end with .mp4 or .mkv" $ERROR
-  exit 1
-
-elif ! hash yt-dlp 2>/dev/null; then
-  println "Error: yt-dlp is not installed! Download it from here:" $ERROR
-  println "https://github.com/yt-dlp/yt-dlp" $BOLD
-  exit 1
-
-elif ! hash ffmpeg 2>/dev/null; then
-  println "Error: ffmpeg is not installed! Download it from here:" $ERROR
-  println "https://ffmpeg.org/" $BOLD
   exit 1
 fi
 
