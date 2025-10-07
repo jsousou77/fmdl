@@ -6,7 +6,7 @@ FloMarching downloader script. No account needed.
 - [ffmpeg](https://ffmpeg.org/)
 
 ## Usage
-`./fmdl.sh [OPTIONS] URL`
+`./fmdl [OPTIONS] URL`
 
 ### Options
 ```
