@@ -8,5 +8,5 @@ FloMarching downloader script. No account needed.
 ## Usage
 `./fmdl.sh <FloMarching video URL> <output file>`
 
-## Info on downloading
+### Note:
 This script only works with relatively recent FloMarching videos. Older videos can usually be downloaded directly with `yt-dlp`, and the script will prompt you to do that if it detects you tried to download an older video.
