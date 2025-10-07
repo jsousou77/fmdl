@@ -15,7 +15,10 @@ print() {
   echo -en "${PREFIX}${2}${1}${RESET}"
 }
 
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+if [[ $# == 0 ]]; then
+  noargs="true"
+
+elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
   help="true"
   shift
   argparse=0
@@ -104,28 +107,37 @@ if [[ -n $help ]]; then
   echo -e "${INFO}${0##*/} [OPTIONS] URL"
   println
   println "Options:" $BOLD
-  println '  -o, --output <file>          Filename to output. Must end with .mp4' $INFO
-  println '                               or .mkv (use -u to bypass this' $INFO
-  println '                               requirement). Default is "[title].mp4"' $INFO
-  println '  -u, --unrestricted-format    Disable .mp4/.mkv requirement for output' $INFO
-  println '  -a, --ffmpeg-args            Arguments passed to ffmpeg when combining' $INFO
-  println '                               video and audio. Default is "-c copy".' $INFO
-  println '                               Also sets "-u"' $INFO
-  println '  -c, --color                  Whether to color output. Can be "auto",' $INFO
-  println '                               "always", or "never". Default is "auto"' $INFO
-  println '  -n, --no-prefix              Disables log prefix' $INFO
-  println '  -h, --help                   Show this help message' $INFO
+  println "  -o, --output <file>          ${RESET}Filename to output. Must end with .mp4" $INFO
+  println "                               ${RESET}or .mkv (use -u to bypass this" $INFO
+  println "                               ${RESET}requirement). Default is \"[title].mp4\"" $INFO
+  println "  -u, --unrestricted-format    ${RESET}Disable .mp4/.mkv requirement for output" $INFO
+  println "  -a, --ffmpeg-args            ${RESET}Arguments passed to ffmpeg when combining" $INFO
+  println "                               ${RESET}video and audio. Default is \"-c copy\"." $INFO
+  println "                               ${RESET}Also sets \"-u\"" $INFO
+  println "  -c, --color                  ${RESET}Whether to color output. Can be \"auto\"," $INFO
+  println "                               ${RESET}\"always\", or \"never\". Default is \"auto\"" $INFO
+  println "  -n, --no-prefix              ${RESET}Disables log prefix" $INFO
+  println "  -h, --help                   ${RESET}Show this help message" $INFO
 
   exit 0
 fi
 
-if [[ -n "$unknown_option" ]]; then
-  println "Unknown option: \"$unknown_option\"" $ERROR
+if [[ -n $noargs ]]; then
+  println "Usage: ${0##*/} [OPTIONS] URL"
+  println "Run \"${0##*/} --help\" to see a list of all options"
   exit -1
-fi
 
-if [[ "$url" != "https://www.flomarching.com/"* ]]; then
+elif [[ -n "$unknown_option" ]]; then
+  println "Unknown option: \"$unknown_option\"" $ERROR
+  println "Usage: ${0##*/} [OPTIONS] URL"
+  println "Run \"${0##*/} --help\" to see a list of all options"
+  exit -1
+
+
+elif [[ "$url" != "https://www.flomarching.com/"* ]]; then
   println "Error: This is not a FloMarching URL!" $ERROR
+  println "Usage: ${0##*/} [OPTIONS] URL"
+  println "Run \"${0##*/} --help\" to see a list of all options"
   exit -1
 
 elif [[ -n "$out_file" && -z $unrestricted_format ]]; then
