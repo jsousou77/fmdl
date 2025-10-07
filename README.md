@@ -6,10 +6,10 @@ FloMarching downloader script. No account needed.
 - [ffmpeg](https://ffmpeg.org/)
 
 ## Usage
-```
-./fmdl.sh [OPTIONS] URL
+`./fmdl.sh [OPTIONS] URL`
 
-Options:
+### Options
+```
 -o, --output <file>          Filename to output. Must end with .mp4
                              or .mkv (use -u to bypass this
                              requirement). Default is "[title].mp4"
@@ -22,6 +22,5 @@ Options:
 -n, --no-prefix              Disables log prefix
 -h, --help                   Show this help message
 ```
-
 ### Note:
 This script only works with relatively recent FloMarching videos. Older videos can usually be downloaded directly with `yt-dlp`, and the script will prompt you to do that if it detects you tried to download an older video.
